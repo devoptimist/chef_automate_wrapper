@@ -24,7 +24,9 @@ config += if node['chef_automate_wrapper']['dc_token'] != ''
              a1_data_collector_token = "#{node['chef_automate_wrapper']['dc_token']}"
 
             EOF
-end
+          else
+            ''
+          end
 
 config += <<~EOF
     [global.v1]
