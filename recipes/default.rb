@@ -41,6 +41,12 @@ chef_automatev2 'chef-automate' do
   accept_license node['chef_automate_wrapper']['accept_license'].to_s == 'true'
 end
 
+execute 'apply_license' do
+  command "chef-automate license apply #{node['chef_automate_wrapper']['license']}"
+  only_if { node['chef_automate_wrapper']['license'] != '' }
+  not_if "chef-automate license status | grep Expiration"
+end
+
 execute 'update_admin_password' do
   command "chef-automate iam admin-access restore #{node['chef_automate_wrapper']['admin_password']}"
   not_if { node['chef_automate_wrapper']['admin_password'] == '' }
