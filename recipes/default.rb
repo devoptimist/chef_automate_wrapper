@@ -52,6 +52,24 @@ execute 'update_admin_password' do
   not_if { node['chef_automate_wrapper']['admin_password'] == '' }
 end
 
+# suse is different
+if node['platform_family'] == 'suse'
+
+  link '/usr/bin/chef-automate' do
+    to '/bin/chef-automate'
+    only_if { ::File.file?('/bin/chef-automate') }
+  end
+
+  chef_automatev2 'chef-automate' do
+    action :reconfigure
+    channel node['chef_automate_wrapper']['channel'].to_sym
+    version node['chef_automate_wrapper']['version']
+    config config
+    accept_license node['chef_automate_wrapper']['accept_license'].to_s == 'true'
+  end
+
+end
+
 ruby_block 'parse_creds' do
   block do
     require 'json'
