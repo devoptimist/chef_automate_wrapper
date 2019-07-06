@@ -17,7 +17,6 @@ hostname = if node['chef_automate_wrapper']['fqdn'] != ''
              node['cloud']['public_ipv4_addrs'].first
            end
 
-
 config += if node['chef_automate_wrapper']['dc_token'] != ''
             <<~EOF
              [auth_n.v1.sys.service]
@@ -37,14 +36,14 @@ EOF
 chef_automatev2 'chef-automate' do
   channel node['chef_automate_wrapper']['channel'].to_sym
   version node['chef_automate_wrapper']['version']
-  config config
+  config node['platform_family'] == 'suse' ? '' : config
   accept_license node['chef_automate_wrapper']['accept_license'].to_s == 'true'
 end
 
 execute 'apply_license' do
   command "chef-automate license apply #{node['chef_automate_wrapper']['license']}"
   only_if { node['chef_automate_wrapper']['license'] != '' }
-  not_if "chef-automate license status | grep Expiration"
+  not_if 'chef-automate license status | grep Expiration'
 end
 
 execute 'update_admin_password' do
