@@ -9,3 +9,7 @@ default['chef_automate_wrapper']['admin_password'] = ''
 default['chef_automate_wrapper']['jq_url'] = 'https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64'
 default['chef_automate_wrapper']['data_script'] = '/usr/bin/automate-secrets.sh'
 default['chef_automate_wrapper']['license'] = ''
+
+# SSL certificate related attribures
+default['chef_automate_wrapper']['cert'] = ''
+default['chef_automate_wrapper']['cert_key'] = ''
