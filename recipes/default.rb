@@ -47,7 +47,7 @@ EOF
 chef_automatev2 'chef-automate' do
   channel node['chef_automate_wrapper']['channel'].to_sym
   version node['chef_automate_wrapper']['version']
-  config node['platform_family'] == 'suse' ? '' : config
+  config (node['platform_family'] == 'suse' ||  node['platform'] == 'ubuntu') ? '' : config
   accept_license node['chef_automate_wrapper']['accept_license'].to_s == 'true'
 end
 
@@ -63,7 +63,7 @@ execute 'update_admin_password' do
 end
 
 # suse is different
-if node['platform_family'] == 'suse'
+if node['platform_family'] == 'suse' || node['platform'] == 'ubuntu'
 
   link '/usr/bin/chef-automate' do
     to '/bin/chef-automate'
