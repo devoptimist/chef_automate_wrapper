@@ -46,6 +46,7 @@ EOF
 
 chef_automatev2 'chef-automate' do
   channel node['chef_automate_wrapper']['channel'].to_sym
+  products node['chef_automate_wrapper']['products']
   version node['chef_automate_wrapper']['version']
   config (node['platform_family'] == 'suse' ||  node['platform'] == 'ubuntu') ? '' : config
   accept_license node['chef_automate_wrapper']['accept_license'].to_s == 'true'
@@ -73,6 +74,7 @@ if node['platform_family'] == 'suse' || node['platform'] == 'ubuntu'
   chef_automatev2 'chef-automate' do
     action :reconfigure
     channel node['chef_automate_wrapper']['channel'].to_sym
+    products node['chef_automate_wrapper']['products']
     version node['chef_automate_wrapper']['version']
     config config
     accept_license node['chef_automate_wrapper']['accept_license'].to_s == 'true'
