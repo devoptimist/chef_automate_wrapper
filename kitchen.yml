@@ -1,0 +1,27 @@
+---
+driver:
+  name: vagrant
+  synced_folders:
+   - ["./results", "/tmp/results"]
+
+provisioner:
+  name: shell
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7
+
+suites:
+  - name: default
+    provisioner:
+      arguments: ["<%= ENV['HAB_ORIGIN'] %>", "chef_automate_wrapper"]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
+      chef_automate_wrapper:
+        license: "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTQ0NTRlLWE0OGEtNGJkMS05MDI2LTliMTkwMWExZjRkMCIsInZlcnNpb24iOiIxIiwidHlwZSI6ImludGVybmFsIiwiZ2VuZXJhdG9yIjoiY2hlZi9saWNlbnNlLTIuMC4wIiwia2V5X3NoYTI1NiI6ImUwZGYyOGM4YmM2ODE1MGVkYmZlZjk4Y2Q2YjdkYzQzOWMxZjgwYzdlN2VmNzQ3ODkzYTY4OTNhMmY3YjYwZjciLCJnZW5lcmF0aW9uX2RhdGUiOnsic2Vjb25kcyI6MTU3OTAzMTEyMX0sImN1c3RvbWVyIjoiU3RldmUgQnJvd24iLCJjdXN0b21lcl9pZCI6IjBlZjExYjVjLTU2YjktNGEwYi05ZjZhLTlhM2VkOGYxNTBiOSIsImN1c3RvbWVyX2lkX3ZlcnNpb24iOiIxIiwiZW50aXRsZW1lbnRzIjpbeyJuYW1lIjoiQ2hlZiBBdXRvbWF0ZSIsIm1lYXN1cmUiOiJub2RlcyIsImxpbWl0IjotMSwic3RhcnQiOnsic2Vjb25kcyI6MTU3ODk2MDAwMH0sImVuZCI6eyJzZWNvbmRzIjoxNjM2OTM0Mzk5fX1dfQ.APcw_NeuT36P8FqAlwByuhQolKuIy90Zy7fgm-T6BpYWbYWVlyhOKI1WuGV-jcvuQwUqANCPCqzDW2TdeWAMWrCzAKjNL2JMEqNR1hQPloCC_CUffICuh3DuIQ1PctUxqZWQBikXhjHPFi9ogpB3F3qguTjo8o95fOrPigOSUcj-lyOs"
+        dc_token: thisismytoken
+        admin_password: thisismyadminpassword

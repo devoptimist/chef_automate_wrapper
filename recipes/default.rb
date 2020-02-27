@@ -13,6 +13,10 @@ config = node['chef_automate_wrapper']['config']
 
 hostname = if node['chef_automate_wrapper']['fqdn'] != ''
              node['chef_automate_wrapper']['fqdn']
+           elsif node['chef_automate_wrapper']['hostname_use_hostname']
+             node['hostname']
+           elsif node['chef_automate_wrapper']['hostname_use_private_ip']
+             node['ipaddress']
            elsif node['cloud']
              node['cloud']['public_ipv4_addrs'].first
            end
@@ -48,7 +52,7 @@ chef_automatev2 'chef-automate' do
   channel node['chef_automate_wrapper']['channel'].to_sym
   products node['chef_automate_wrapper']['products']
   version node['chef_automate_wrapper']['version']
-  config (node['platform_family'] == 'suse' ||  node['platform'] == 'ubuntu') ? '' : config
+  config (platform_family?('suse') || platform?('ubuntu')) ? '' : config
   accept_license node['chef_automate_wrapper']['accept_license'].to_s == 'true'
 end
 
@@ -64,7 +68,7 @@ execute 'update_admin_password' do
 end
 
 # suse is different
-if node['platform_family'] == 'suse' || node['platform'] == 'ubuntu'
+if platform_family?('suse') || platform?('ubuntu')
 
   link '/usr/bin/chef-automate' do
     to '/bin/chef-automate'

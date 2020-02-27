@@ -14,3 +14,4 @@ run_list 'chef_automate_wrapper::default'
 
 # Specify a custom source for a single cookbook:
 cookbook 'chef_automate_wrapper', path: '.'
+cookbook 'chef-ingredient', github: 'srb3/chef-ingredient', branch: 'products'

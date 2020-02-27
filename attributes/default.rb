@@ -14,3 +14,7 @@ default['chef_automate_wrapper']['products'] = ['automate']
 # SSL certificate related attribures
 default['chef_automate_wrapper']['cert'] = ''
 default['chef_automate_wrapper']['cert_key'] = ''
+
+# hostname choice related
+default['chef_autoamte_wrapper']['hostname_use_private_ip'] = false
+default['chef_autoamte_wrapper']['hostname_use_hostname'] = false
