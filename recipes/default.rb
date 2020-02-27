@@ -11,14 +11,23 @@ end
 
 config = node['chef_automate_wrapper']['config']
 
-hostname = if node['chef_automate_wrapper']['fqdn'] != ''
+if node['chef_automate_wrapper']['fqdn'] != ''
+  node.default['chef_automate_wrapper']['hostname_method'] = 'external_fqdn'
+end
+
+hostname = case node['chef_automate_wrapper']['hostname_method']
+           when 'external_fqdn'
              node['chef_automate_wrapper']['fqdn']
-           elsif node['chef_automate_wrapper']['hostname_use_hostname']
-             node['hostname']
-           elsif node['chef_automate_wrapper']['hostname_use_private_ip']
+           when 'fqdn'
+             node['fqdn']
+           when 'ipaddress'
              node['ipaddress']
-           elsif node['cloud']
+           when 'hostname'
+             node['hostname']
+           when 'cloud'
              node['cloud']['public_ipv4_addrs'].first
+           else
+             node['ipaddres']
            end
 
 config += if node['chef_automate_wrapper']['dc_token'] != ''
