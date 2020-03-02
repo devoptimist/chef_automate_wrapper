@@ -12,7 +12,9 @@ end
 config = node['chef_automate_wrapper']['config']
 
 if node['chef_automate_wrapper']['fqdn'] != ''
+  Chef::Log.error("IF WE HAVE FQDN: #{node['chef_automate_wrapper']['fqdn']}")
   node.default['chef_automate_wrapper']['hostname_method'] = 'external_fqdn'
+  Chef::Log.error("IF WE HAVE FQDN SET HOSTNAME_METHOD TO EXTERANL_FQDN: #{node['chef_automate_wrapper']['hostname_method']}")
 end
 
 hostname = case node['chef_automate_wrapper']['hostname_method']
@@ -29,6 +31,8 @@ hostname = case node['chef_automate_wrapper']['hostname_method']
            else
              node['ipaddres']
            end
+
+Chef::Log.error("HOSTNAME SET TO: #{hostname}")
 
 config += if node['chef_automate_wrapper']['dc_token'] != ''
             <<~EOF
