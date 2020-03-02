@@ -13,7 +13,7 @@ config = node['chef_automate_wrapper']['config']
 
 if node['chef_automate_wrapper']['fqdn'] != ''
   Chef::Log.error("IF WE HAVE FQDN: #{node['chef_automate_wrapper']['fqdn']}")
-  node.default['chef_automate_wrapper']['hostname_method'] = 'external_fqdn'
+  node.override['chef_automate_wrapper']['hostname_method'] = 'external_fqdn'
   Chef::Log.error("IF WE HAVE FQDN SET HOSTNAME_METHOD TO EXTERANL_FQDN: #{node['chef_automate_wrapper']['hostname_method']}")
 end
 
