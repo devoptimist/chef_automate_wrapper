@@ -43,7 +43,7 @@ config += if node['chef_automate_wrapper']['dc_token'] != ''
 config += if node['chef_automate_wrapper']['cert'] != '' &&
              node['chef_automate_wrapper']['cert_key'] != ''
             <<~EOF
-              [[load_balancer.v1.sys.frontend_tls]]
+              [[global.v1.frontend_tls]]
               cert = """#{node['chef_automate_wrapper']['cert']}"""
               key = """#{node['chef_automate_wrapper']['cert_key']}"""
             EOF
