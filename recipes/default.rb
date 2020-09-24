@@ -118,3 +118,26 @@ file node['chef_automate_wrapper']['data_script'] do
   EOF
   mode '0755'
 end
+
+directory node['chef_automate_wrapper']['patching_hartifacts_path'] do
+  recursive true
+  not_if { node['chef_automate_wrapper']['patching_override_origin'] == 'chef' }
+end
+
+template node['chef_automate_wrapper']['patching_toml_file_path'] do
+  source 'automate_patch.toml.erb'
+  variables(
+    channel: node['chef_automate_wrapper']['patching_channel'],
+    upgrade_strategy: node['chef_automate_wrapper']['patching_upgrade_strategy'],
+    deployment_type: node['chef_automate_wrapper']['patching_deployment_type'],
+    override_origin: node['chef_automate_wrapper']['patching_override_origin'],
+    hartifacts_path: node['chef_automate_wrapper']['patching_hartifacts_path']
+  )
+  not_if { node['chef_automate_wrapper']['patching_override_origin'] == 'chef' }
+  notifies :run, 'execute[chef_automate_patching_config]', :immediate
+end
+
+execute 'chef_automate_patching_config' do
+  command "chef-automate config patch #{node['chef_automate_wrapper']['patching_toml_file_path']}"
+  action :nothing
+end

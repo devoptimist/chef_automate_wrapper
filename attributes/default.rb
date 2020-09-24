@@ -17,3 +17,11 @@ default['chef_automate_wrapper']['cert_key'] = ''
 
 # hostname choice related
 default['chef_automate_wrapper']['hostname_method'] = 'ipaddress'
+
+# patching config related
+default['chef_automate_wrapper']['patching_toml_file_path'] = '/root/automate_patching.toml'
+default['chef_automate_wrapper']['patching_channel'] = 'current'
+default['chef_automate_wrapper']['patching_upgrade_strategy'] = 'at-once'
+default['chef_automate_wrapper']['patching_deployment_type'] = 'local'
+default['chef_automate_wrapper']['patching_override_origin'] = 'chef'
+default['chef_automate_wrapper']['patching_hartifacts_path'] = '/hab/results'

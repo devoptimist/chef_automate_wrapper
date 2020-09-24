@@ -17,6 +17,7 @@ bin/*
 kitchen.local.yml
 kitchen.local.*
 .kitchen.local.yml
+configs
 
 # Chef
 Berksfile.lock
