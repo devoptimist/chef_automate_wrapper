@@ -1,6 +1,8 @@
 #!/bin/bash
 export HAB_LICENSE="accept-no-persist"
 
+BOOTSTRAP=${1}
+
 if [ ! -e "/bin/hab" ]; then
     curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash
 fi
@@ -35,8 +37,8 @@ echo "Found $pkg_prefix"
 
 echo "Running chef for $pkg_origin/$pkg_name"
 cd $pkg_prefix
-if [ -f "${dir}/bootstrap.json" ]; then
-    hab pkg exec $pkg_origin/$pkg_name chef-client -z -j ${dir}/bootstrap.json -c $pkg_prefix/config/bootstrap-config.rb --chef-license accept-no-persist
+if [ -f "${dir}/${BOOTSTRAP}" ]; then
+    hab pkg exec $pkg_origin/$pkg_name chef-client -z -j ${dir}/${BOOTSTRAP} -c $pkg_prefix/config/bootstrap-config.rb --chef-license accept-no-persist
   else
     hab pkg exec $pkg_origin/$pkg_name chef-client -z -c $pkg_prefix/config/bootstrap-config.rb --chef-license accept-no-persist
 fi

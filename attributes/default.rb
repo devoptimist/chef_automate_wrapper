@@ -25,3 +25,31 @@ default['chef_automate_wrapper']['patching_upgrade_strategy'] = 'at-once'
 default['chef_automate_wrapper']['patching_deployment_type'] = 'local'
 default['chef_automate_wrapper']['patching_override_origin'] = 'chef'
 default['chef_automate_wrapper']['patching_hartifacts_path'] = '/hab/results'
+
+# automate deployed chef server
+default['chef_automate_wrapper']['chef_users'] = {}
+# example of chef users
+# node.default['chef_automate_wrapper']['chef_users'] = {
+#   'jdoe' => {
+#     'first_name' => 'Jane',
+#     'last_name' => 'Doe',
+#     'email' => 'jdoe@mail.com',
+#     'password' => 'somepass',
+#     'serveradmin' => true
+#   }
+# }
+
+default['chef_automate_wrapper']['chef_orgs'] = {}
+# example of chef_orgs
+# node.default['chef_automate_wrapper']['chef_orgs'] = {
+#   'acmecorp' => {
+#     'org_full_name' => 'acmecorp chef org',
+#     'admins' => ['jdoe']
+#   }
+# }
+
+default['chef_automate_wrapper']['init_user'] = ''
+default['chef_automate_wrapper']['init_org'] = ''
+# if users and orgs are being created, set the name of one user and their org in the above attributes
+# This will be used by the srb3 terraform modules to export the user name, org name, client pem, and
+# org validation pem to other terraform modules
